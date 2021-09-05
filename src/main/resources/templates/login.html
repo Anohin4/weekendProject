@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+</head>
+<body>
+<form th:action="@{/login}" method="post">
+    <p th:if="${param.error}" class="error">Wrong user or password</p>
+    <fieldset>
+        <label for="username">Username <input id="username" type="text" name="username"></label>
+        <br>
+        <label for="password">Password  <input id="password" type="password" name="password"></label>
+        <br>
+        <input type="submit" value="Log in">
+    </fieldset>
+</form>
+</body>
+</html>
