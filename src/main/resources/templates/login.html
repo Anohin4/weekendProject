@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login page</title>
@@ -9,7 +9,7 @@
     <p th:if="${param.error}" class="error">Wrong user or password</p>
     <fieldset>
         <label for="username">Username <input id="username" type="text" name="username"></label>
-        <br>
+        <br/>
         <label for="password">Password  <input id="password" type="password" name="password"></label>
         <br>
         <input type="submit" value="Log in">

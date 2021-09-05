@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
 <body>
-<h1>This is HelloWorld</h1>
-<p th:text="Hello"></p>
-<div sec:authorize="hasRole('ROLE_USER')">only for user</div>
+<h4>This is HelloWorld</h4>
+<p>Hello, <span th:text="${#httpServletRequest.remoteUser}">></p>
+<p th:text="${userMessage}"></p>
 </body>
 </html>

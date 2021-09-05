@@ -1,30 +1,38 @@
 package com.example.weekendproject.controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@org.springframework.stereotype.Controller
+@RestController
 public class Controller {
+    ModelAndView modelAndView = new ModelAndView();
 
     @GetMapping("/home")
-    public String homepage() {
-        return "home";
+    public ModelAndView homepage() {
+        modelAndView.setViewName("home");
+        return modelAndView;
     }
 
     @GetMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
-
-    @GetMapping("/login-error")
-    public String loginFail(Model model) {
-        model.addAttribute("loginError",true);
-        return "login-error";
+    public ModelAndView hello(Model model) {
+        String testMessage = "testTEST";
+        model.addAttribute("userMessage", testMessage);
+        modelAndView.setViewName("hello");
+        return modelAndView;
     }
 
     @RequestMapping("/login")
-    public String loginPage() {
-        return "login";
+//    @ResponseBody
+    public ModelAndView loginPage() {
+        modelAndView.setViewName("login");
+        return modelAndView;
     }
+
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public ModelAndView loginPageOk() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("hello");
+//        return modelAndView;
+//    }
 }
