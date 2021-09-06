@@ -37,7 +37,7 @@ public class Controller {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView signUpGet(Model model) {
         User user = new User();
         model.addAttribute("user", user);
@@ -45,10 +45,10 @@ public class Controller {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView signUpPost(User user) {
         userService.addUser(user);
-        modelAndView.setViewName("registration");
+        modelAndView.setViewName("login");
         return modelAndView;
     }
 
