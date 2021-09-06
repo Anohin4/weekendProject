@@ -4,8 +4,10 @@ import com.example.weekendproject.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public interface UserRepository extends CrudRepository<User, Integer> {
-    public User findByEmail(String email);
-    public User findByUserName(String username);
+    public Optional<User> findByEmail(String email);
+    public Optional<User> findByUserName(String username);
 }
