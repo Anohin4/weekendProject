@@ -4,9 +4,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.sql.DataSource;
+
 @RestController
 public class Controller {
     ModelAndView modelAndView = new ModelAndView();
+
 
     @GetMapping("/home")
     public ModelAndView homepage() {
@@ -23,16 +26,9 @@ public class Controller {
     }
 
     @RequestMapping("/login")
-//    @ResponseBody
     public ModelAndView loginPage() {
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public ModelAndView loginPageOk() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("hello");
-//        return modelAndView;
-//    }
 }
