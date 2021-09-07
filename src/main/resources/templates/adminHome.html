@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<h4>This is HelloWorld for admin</h4>
+<p>Hello, <span th:text="${#httpServletRequest.remoteUser}">></p>
+</body>
+</html>

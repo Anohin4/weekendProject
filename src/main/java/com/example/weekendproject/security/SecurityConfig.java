@@ -1,6 +1,7 @@
 package com.example.weekendproject.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,17 +23,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    @Value("${spring.queries.users-query}")
+    private String userQueries;
+
+    @Value("${spring.queries.roles-query}")
+    private String roleQueries;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select username,password,is_Active "
-                        + "from user "
-                        + "where username = ?")
-                .authoritiesByUsernameQuery("select username,role "
-                        + "from role "
-                        + "where username = ?");
-
+                .usersByUsernameQuery(userQueries)
+                .authoritiesByUsernameQuery(roleQueries);
     }
 
     @Override
@@ -47,11 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/hello")
+                .defaultSuccessUrl("/homepage")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/home")
+                .logoutSuccessUrl("/login")
                 .and().csrf().disable();
         http.headers().frameOptions().disable();
 

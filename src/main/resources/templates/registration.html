@@ -7,9 +7,14 @@
 <body>
 <p>If you want to sign up, you can use that form. If you want to log in, go <a href="login.html">here.</a> </p>
 <form th:action="@{/registration}" th:object="${user}" method="post" >
-    <label for="username">Username <input id="username" th:field="*{userName}" type="text"/></label>
+    <label for="username">Username <input id="username" th:field="*{username}" type="text"/></label><br><br>
+    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message">Invalid username.</p>
     <label for="password">Password <input id="password" th:field="*{password}" type="text"/></label>
+    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message">Invalid password.</p>
+    <br><br>
     <label for="email">Email <input id="email" th:field="*{email}" type="text"/></label>
+    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message">Invalid password.</p>
+    <br>
     <input id="submit" type="submit">
 </form>
 </body>
