@@ -40,9 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and()
                 .authorizeRequests()
-                .antMatchers("/homepage").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/homepage").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/home").permitAll()
                 .antMatchers("/logout").permitAll()
                 .antMatchers("/registration").permitAll()
                 .and()

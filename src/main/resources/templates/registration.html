@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
 <body>
+<nav th:insert="~{parts/navbar::copy}"></nav>
 <p>If you want to sign up, you can use that form. If you want to log in, go <a href="login.html">here.</a> </p>
 <form th:action="@{/registration}" th:object="${user}" method="post" >
     <label for="username">Username <input id="username" th:field="*{username}" type="text"/></label><br><br>
@@ -17,5 +19,6 @@
     <br>
     <input id="submit" type="submit">
 </form>
+
 </body>
 </html>

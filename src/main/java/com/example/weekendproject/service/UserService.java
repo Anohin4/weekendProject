@@ -6,6 +6,7 @@ import com.example.weekendproject.repository.RoleRepository;
 import com.example.weekendproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,10 +52,29 @@ public class UserService {
         return userRepository.findByUsername(authentication.getName()).get();
     }
 
+    public boolean isAnon() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication instanceof AnonymousAuthenticationToken) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean isCurrentUserAdmin() {
         User user = getInstanceOfCurrentUser();
         Set<Role> roles = user.getRoles();
         Role admin = roleRepository.findByRole("ROLE_ADMIN");
+        if(roles.contains(admin)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean isCurrentUserUser() {
+        User user = getInstanceOfCurrentUser();
+        Set<Role> roles = user.getRoles();
+        Role admin = roleRepository.findByRole("ROLE_USER");
         if(roles.contains(admin)) {
             return true;
         } else {

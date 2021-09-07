@@ -4,6 +4,8 @@ import com.example.weekendproject.model.Role;
 import com.example.weekendproject.model.User;
 import com.example.weekendproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +22,11 @@ public class Controller {
     UserService userService;
 
 
-    @GetMapping("/home")
-    public ModelAndView homepage() {
-        modelAndView.setViewName("home");
-        return modelAndView;
-    }
-
     @GetMapping("/homepage")
-    public ModelAndView hello(Model model) {
-        Set<Role> roles =userService.getInstanceOfCurrentUser().getRoles();
-        if(userService.isCurrentUserAdmin()) {
+    public ModelAndView hello() {
+        if(userService.isAnon()) {
+            modelAndView.setViewName("home");
+        } else if(userService.isCurrentUserAdmin()) {
             modelAndView.setViewName("adminHome");
         }else {
             modelAndView.setViewName("userHome");
@@ -65,5 +62,6 @@ public class Controller {
         }
         return modelAndView;
     }
+
 
 }
