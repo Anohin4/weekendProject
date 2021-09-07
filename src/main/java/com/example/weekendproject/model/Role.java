@@ -17,8 +17,8 @@ import java.util.Set;
 public class Role {
     @Column(name = "ROLE_ID")
     @Id
-    int id;
+    private int id;
     @Column(name = "ROLE")
-    String role;
+    private String role;
 
 }

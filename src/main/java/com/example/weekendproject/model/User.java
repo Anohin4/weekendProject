@@ -24,22 +24,23 @@ public class User {
 
     @Length(min=6, message = "Password must be at least 6 chars")
     @Column(name = "PASSWORD")
-    String password;
+    private String password;
 
     @Email(message = "wrong email format")
     @Column(name = "EMAIL")
-    String email;
+    private String email;
     @Column(name = "FIRST_NAME")
-    String firstName;
+    private String firstName;
     @Column(name = "LAST_NAME")
-    String lastName;
+    private String lastName;
     @Column(name="IS_ACTIVE")
-    boolean isActive = true;
-
+    private boolean isActive = true;
     @ManyToMany
             @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
     Set<Role> roles;
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
 }

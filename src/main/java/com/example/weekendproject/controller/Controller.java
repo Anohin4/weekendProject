@@ -1,25 +1,29 @@
 package com.example.weekendproject.controller;
 
-import com.example.weekendproject.model.Role;
 import com.example.weekendproject.model.User;
+import com.example.weekendproject.service.PostService;
 import com.example.weekendproject.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Set;
 
 @RestController
 public class Controller {
     ModelAndView modelAndView = new ModelAndView();
 
-    @Autowired
+    final
+    PostService postService;
+
+    final
     UserService userService;
+
+    public Controller(PostService postService, UserService userService) {
+        this.postService = postService;
+        this.userService = userService;
+    }
 
 
     @GetMapping("/homepage")

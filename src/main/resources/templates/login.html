@@ -9,22 +9,24 @@
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
 <div class="container">
-<form th:action="@{/login}" method="post" class="col-lg-6 offset-lg-3 ">
-    <div class="row justify-content-center">
-        <span class="border border-5">
-    <p th:if="${param.error}" class="error">Wrong user or password</p>
-    <fieldset>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Username</span>
-            <input id="username" type="text" name="username" placeholder="Username" class="form-control">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon2">Password</span>
-            <input id="password" type="password" name="Password" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-light">Submit</button>
-    </fieldset>
-            </span>
+<form th:action="@{/login}" method="post" class="col-lg-6 offset-lg-3 pt-1 ">
+    <div class="row" style="padding-top: 20%;">
+        <div class="row justify-content-center">
+            <span class="border border-5" style="padding:5em">
+            <p th:if="${param.error}" class="error">Wrong user or password</p>
+            <fieldset>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Username</span>
+                    <input id="username" type="text" name="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2">Password</span>
+                    <input id="password" type="password" name="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-light" style="margin-left:200px" >Submit</button>
+            </fieldset>
+                </span>
+    </div>
     </div>
 </form>
 </div>
