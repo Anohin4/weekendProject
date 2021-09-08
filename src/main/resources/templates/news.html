@@ -12,17 +12,16 @@
     <div th:each="post : ${postList}" >
         <div class="row mb-3">
             <p>Author: <span th:text="${post.user.username}"/></p>
-            <p>Date: <span th:text="${post.date}"/></p>
+            <p>Date: <span th:text="${post.date}"/> Id: <span th:text="${post.id}"/></p>
             <div sec:authorize="hasRole('ADMIN')" class="row-third">
                 <button type="button" class="btn btn-secondary">Edit</button>
-                <span th:action="@{/news/${post.id}}" method="delete">
-                    <button type="button" class="btn btn-danger">Delete</button>
-                </span>
-                <span class="border border-5 rounded">
-                    <span th:text="${post.news}"></span>
-                </span>
+                <form th:action="@{/news/{id}(id=${post.id})}" th:method="delete" >
+                    <button type="submit" class="btn btn-danger" >Delete</button>
+                </form>
             </div>
-            <br>
+            <span class="border border-5 rounded">
+                <span th:text="${post.news}"></span>
+            </span>
         </div>
     </div>
 </div>

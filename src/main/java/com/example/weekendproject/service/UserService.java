@@ -1,17 +1,19 @@
 package com.example.weekendproject.service;
 
+import com.example.weekendproject.model.Post;
 import com.example.weekendproject.model.Role;
 import com.example.weekendproject.model.User;
 import com.example.weekendproject.repository.RoleRepository;
 import com.example.weekendproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -34,11 +36,8 @@ public class UserService {
     public boolean isUserAlreadyInBase(User user) {
         String name = user.getUsername();
         String email = user.getEmail();
-        if (userRepository.findByUsername(name).isPresent() ||
-        userRepository.findByEmail(email).isPresent()) {
-            return true;
-        }
-        return false;
+        return userRepository.findByUsername(name).isPresent() ||
+                userRepository.findByEmail(email).isPresent();
     }
 
     public User addUserRole(User user) {
@@ -54,31 +53,26 @@ public class UserService {
 
     public boolean isAnon() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication instanceof AnonymousAuthenticationToken) {
-            return true;
-        } else {
-            return false;
-        }
+        return authentication instanceof AnonymousAuthenticationToken;
     }
 
     public boolean isCurrentUserAdmin() {
         User user = getInstanceOfCurrentUser();
         Set<Role> roles = user.getRoles();
         Role admin = roleRepository.findByRole("ROLE_ADMIN");
-        if(roles.contains(admin)) {
-            return true;
-        } else {
-            return false;
-        }
+        return roles.contains(admin);
     }
     public boolean isCurrentUserUser() {
         User user = getInstanceOfCurrentUser();
         Set<Role> roles = user.getRoles();
         Role admin = roleRepository.findByRole("ROLE_USER");
-        if(roles.contains(admin)) {
-            return true;
-        } else {
-            return false;
-        }
+        return roles.contains(admin);
+    }
+
+    public void deletePost(User user, Post post) {
+        List<Post> posts = user.getPosts();
+        posts.remove(post);
+        user.setPosts(posts);
+        userRepository.save(user);
     }
 }

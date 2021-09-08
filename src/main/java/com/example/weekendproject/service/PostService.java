@@ -1,11 +1,14 @@
 package com.example.weekendproject.service;
 
 import com.example.weekendproject.model.Post;
+import com.example.weekendproject.model.User;
 import com.example.weekendproject.repository.PostRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PostService {
@@ -20,7 +23,9 @@ public class PostService {
     }
 
     public Post addPost(Post post) {
-        post.setDate(LocalDateTime.now().toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        post.setDate(now.format(formatter));
         post.setUser(userService.getInstanceOfCurrentUser());
         return postRepository.save(post);
     }
@@ -28,6 +33,21 @@ public class PostService {
     public List<Post> findAll() {
         return postRepository.findAll();
     }
+
+    public Optional<Post> findPost(int id) {
+       return postRepository.findById(id);
+    }
+
+    public void deletePost(int id) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if(optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            User user = post.getUser();
+            userService.deletePost(user, post);
+            postRepository.delete(post);
+        }
+    }
+
 
 
 }

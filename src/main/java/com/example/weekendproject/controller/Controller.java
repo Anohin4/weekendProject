@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class Controller {
@@ -89,6 +90,25 @@ public class Controller {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/news/{id}")
+    @RequestMapping(value = "/news/{id}", method = RequestMethod.GET)
+    public ModelAndView getPost(@PathVariable int id, Model model) {
+        Optional<Post> post = postService.findPost(id);
+        if(post.isEmpty()) {
+            Post emptyPost = new Post();
+            emptyPost.setNews("There is no post with that id");
+            model.addAttribute("post", emptyPost);
+        } else {
+            model.addAttribute("post", post.get());
+        }
+        modelAndView.setViewName("lookToOnePost");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/news/{id}", method = RequestMethod.DELETE)
+    public ModelAndView deletePost(@PathVariable int id, Model model) {
+        postService.deletePost(id);
+        modelAndView.setViewName("redirect:/news");
+        return modelAndView;
+    }
 
 }
