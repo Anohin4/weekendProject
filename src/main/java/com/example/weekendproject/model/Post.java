@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
@@ -22,5 +23,6 @@ public class Post {
     private String date;
 
     @Column(name = "POST")
-    private String post;
+    @NotEmpty
+    private String news;
 }

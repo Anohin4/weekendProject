@@ -29,6 +29,7 @@ public class User {
     private String password;
 
     @Email(message = "wrong email format")
+    @NotEmpty
     @Column(name = "EMAIL")
     private String email;
     @Column(name = "FIRST_NAME")

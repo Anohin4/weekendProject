@@ -7,16 +7,22 @@
 </head>
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
-<form th:action="@{/registration}" th:object="${user}" method="post" >
-    <label for="username">Username <input id="username" th:field="*{username}" type="text"/></label><br><br>
-    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message">Invalid username.</p>
-    <label for="password">Password <input id="password" th:field="*{password}" type="text"/></label>
-    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message">Invalid password.</p>
-    <br><br>
-    <label for="email">Email <input id="email" th:field="*{email}" type="text"/></label>
-    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message">Invalid password.</p>
-    <br>
-    <input id="submit" type="submit">
+<form th:action="@{/registration}" th:object="${user}" method="post" class="col-lg-6 offset-lg-3 pt-1 ">
+    <div class="row" style="padding-top: 20%;">
+        <div class="row justify-content-center">
+            <span class="border border-5" style="padding:5em">
+                <label for="username">Username <input id="username" th:field="*{username}" class="form-control" type="text"/></label><br><br>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message">Invalid username.</p>
+                <label for="password">Password <input class="form-control" id="password" th:field="*{password}" type="text"/></label>
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message">Invalid password.</p>
+                <br><br>
+                <label for="email">Email <input class="form-control" id="email" th:field="*{email}" type="text"/></label>
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message">Invalid email.</p>
+                <br>
+                <input id="submit" type="submit">
+            </span>
+        </div>
+    </div>
 </form>
 
 </body>

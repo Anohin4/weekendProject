@@ -8,11 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Set;
 
 @SpringBootApplication
 public class WeekendProjectApplication {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     final
     RoleRepository roleRepository;
 
@@ -35,7 +37,8 @@ public class WeekendProjectApplication {
         roleRepository.save(role2);
         Set<Role> roles = Set.of(role,role2);
         User user = new User();
-        user.setPassword("adminadmin");
+        user.setId(1);
+        user.setPassword(bCryptPasswordEncoder.encode("adminadmin"));
         user.setRoles(roles);
         user.setUsername("admin");
         user.setEmail("admin@admin");

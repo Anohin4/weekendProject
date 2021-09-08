@@ -9,9 +9,20 @@
 </head>
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
-<h4>This is HelloWorld for admin</h4>
 
-<p>Hello, <span th:text="${#httpServletRequest.remoteUser}">></p>
+<form th:action="@{/addPost}" th:object="${post}" method="post" class="col-lg-6 offset-lg-3 pt-1" >
+    <div class="row" style="padding-top: 20%;">
+        <div class="row justify-content-center">
+            <span class="border border-5" style="padding:5em">
+                <p>Hello, <span th:text="${#httpServletRequest.remoteUser}"></p>
+              <label for="postForm" class="form-label">If you want to add post, wright it in that form</label>
+              <textarea th:field="*{news}" class="form-control" id="postForm" rows="6"></textarea>
+                <p th:if="${#fields.hasErrors('news')}" th:errors="*{news}" class="validation-message"/>
+                <button type="submit" class="btn btn-light">Submit</button>
+            </span>
+        </div>
+    </div>
+</form>
 
 
 </body>

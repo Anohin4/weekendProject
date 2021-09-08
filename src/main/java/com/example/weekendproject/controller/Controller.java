@@ -60,8 +60,7 @@ public class Controller {
     public ModelAndView signUp(@Valid  User user, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
-        }
-        if(userService.isUserAlreadyInBase(user)) {
+        }else if(userService.isUserAlreadyInBase(user)) {
             bindingResult.rejectValue("username", "error.user",
                     "There is already a user registered with the email or username provided");
         } else {
@@ -78,5 +77,18 @@ public class Controller {
         modelAndView.setViewName("addpost");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/addPost", method = RequestMethod.POST)
+    public ModelAndView  addPost(Model model, @Valid Post post, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            modelAndView.setViewName("addpost");
+        } else {
+            postService.addPost(post);
+            modelAndView.setViewName("redirect:/news");
+        }
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/news/{id}")
 
 }
