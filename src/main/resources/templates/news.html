@@ -10,5 +10,10 @@
 <nav th:insert="~{parts/navbar::copy}"></nav>
 <h4>This is HelloWorld for user</h4>
 <p>Hello, <span th:text="${#httpServletRequest.remoteUser}">></p>
+<div class="container">
+    <div th:each="post : ${postList}" >
+        <td><span th:text="${post.post}"></span></td>
+    </div>
+</div>
 </body>
 </html>

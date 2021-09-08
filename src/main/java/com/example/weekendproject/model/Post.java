@@ -1,14 +1,20 @@
 package com.example.weekendproject.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
-    @Column(name = "POST ID")
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "AUTHOR")
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
