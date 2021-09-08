@@ -71,15 +71,12 @@ public class Controller {
         return modelAndView;
     }
 
-    @RequestMapping("/addpost")
-    public String addPost() {
-        Post post1 = new Post();
-        Post post2 = new Post();
-        post1.setPost("POST 1;JK;JKNSADFNAS;DF");
-        post2.setPost("POST 2QWERQRQERQRQWR;JK;JKNSADFNAS;DF");
-        postService.addPost(post1);
-        postService.addPost(post2);
-        return "Added";
+    @RequestMapping(value = "/addPost", method = RequestMethod.GET)
+    public ModelAndView showPostForm(Model model) {
+        Post post = new Post();
+        model.addAttribute("post", post);
+        modelAndView.setViewName("addpost");
+        return modelAndView;
     }
 
 }

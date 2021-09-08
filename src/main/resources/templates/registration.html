@@ -7,7 +7,6 @@
 </head>
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
-<p>If you want to sign up, you can use that form. If you want to log in, go <a href="login.html">here.</a> </p>
 <form th:action="@{/registration}" th:object="${user}" method="post" >
     <label for="username">Username <input id="username" th:field="*{username}" type="text"/></label><br><br>
     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message">Invalid username.</p>

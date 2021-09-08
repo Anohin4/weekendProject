@@ -10,6 +10,9 @@
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
 <h4>This is HelloWorld for admin</h4>
+
 <p>Hello, <span th:text="${#httpServletRequest.remoteUser}">></p>
+
+
 </body>
 </html>

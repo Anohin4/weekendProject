@@ -8,11 +8,16 @@
 </head>
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
-<h4>This is HelloWorld for user</h4>
-<p>Hello, <span th:text="${#httpServletRequest.remoteUser}">></p>
 <div class="container">
     <div th:each="post : ${postList}" >
-        <td><span th:text="${post.post}"></span></td>
+        <div class="row mb-3">
+            <p>Author: <span th:text="${post.user.username}"/></p>
+            <p>Date: <span th:text="${post.date}"/></p>
+            <span class="border border-5 rounded">
+                <td><span th:text="${post.post}"></span></td>
+            </span>
+            <br>
+        </div>
     </div>
 </div>
 </body>
