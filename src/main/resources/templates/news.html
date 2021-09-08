@@ -16,7 +16,8 @@
             <div sec:authorize="hasRole('ADMIN')" class="row-third">
                 <button type="button" class="btn btn-secondary">Edit</button>
                 <form th:action="@{/news/{id}(id=${post.id})}" th:method="delete" >
-                    <button type="submit" class="btn btn-danger" >Delete</button>
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" id="submitButton" class="btn btn-danger" >Delete</button>
                 </form>
             </div>
             <span class="border border-5 rounded">
