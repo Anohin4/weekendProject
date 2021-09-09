@@ -34,6 +34,10 @@ public class PostService {
         return postRepository.findAll();
     }
 
+//    public List<Post> findAllWithQuery() {
+//        return
+//    }
+
     public Optional<Post> findPost(int id) {
        return postRepository.findById(id);
     }

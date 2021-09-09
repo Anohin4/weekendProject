@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +23,7 @@ public class Post {
     @Column(name = "DATE")
     private String date;
 
-    @Column(name = "POST")
+    @Column(name = "NEWS")
     @NotEmpty
     private String news;
 }
