@@ -104,10 +104,22 @@ public class Controller {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/news/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/edit/delete/{id}", method = RequestMethod.POST)
     public ModelAndView deletePost(@PathVariable int id, Model model) {
         postService.deletePost(id);
         modelAndView.setViewName("redirect:/news");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/edit/edit/{id}", method = RequestMethod.POST)
+    public ModelAndView editPost(@PathVariable int id, Model model) {
+        Optional<Post> post = postService.findPost(id);
+        if(post.isPresent()){
+            model.addAttribute("post", post.get());
+            modelAndView.setViewName("addpost");
+        } else {
+            modelAndView.setViewName("redirect:/news");
+        }
         return modelAndView;
     }
 

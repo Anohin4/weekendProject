@@ -14,9 +14,12 @@
     <div class="row" style="padding-top: 20%;">
         <div class="row justify-content-center">
             <span class="border border-5" style="padding:5em">
-                <p>Hello, <span th:text="${#httpServletRequest.remoteUser}"></p>
-              <label for="postForm" class="form-label">If you want to add post, wright it in that form</label>
-              <textarea th:field="*{news}" class="form-control" id="postForm" rows="6"></textarea>
+                <p>Hello, <span th:text="${#httpServletRequest.remoteUser}"/></p>
+              <label for="postForm" class="form-label">If you want to add or edit post, wright it in that form</label>
+                <input type="hidden" th:field="*{id}"/>
+              <textarea th:field="*{news}" class="form-control" id="postForm" rows="6">
+                  <span th:text="*{news}"/>
+              </textarea>
                 <p th:if="${#fields.hasErrors('news')}" th:errors="*{news}" class="validation-message"/>
                 <button type="submit" class="btn btn-light">Submit</button>
             </span>

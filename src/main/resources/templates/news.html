@@ -14,9 +14,10 @@
             <p>Author: <span th:text="${post.user.username}"/></p>
             <p>Date: <span th:text="${post.date}"/> Id: <span th:text="${post.id}"/></p>
             <div sec:authorize="hasRole('ADMIN')" class="row-third">
-                <button type="button" class="btn btn-secondary">Edit</button>
-                <form th:action="@{/news/{id}(id=${post.id})}" th:method="delete" >
-                    <input type="hidden" name="_method" value="delete">
+                <form th:action="@{/edit/edit/{id}(id=${post.id})}" method="post" >
+                    <button type="submit" class="btn btn-secondary">Edit</button>
+                </form>
+                <form th:action="@{/edit/delete/{id}(id=${post.id})}" method="post" >
                     <button type="submit" id="submitButton" class="btn btn-danger" >Delete</button>
                 </form>
             </div>
