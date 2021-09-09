@@ -23,7 +23,7 @@ public class Post {
     @Column(name = "DATE")
     private String date;
 
-    @Column(name = "NEWS")
+    @Column(name = "NEWS", length = 10000)
     @NotEmpty
     private String news;
 }

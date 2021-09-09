@@ -25,6 +25,9 @@
             <br>
             <span class="border border-5 rounded">
                 <span th:text="${post.news}"></span>
+                 <form th:action="@{/news/{id}(id=${post.id})}" method="get" >
+                    <button type="submit" class="btn btn-secondary">Read</button>
+                </form>
             </span>
         </div>
     </div>
