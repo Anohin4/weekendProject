@@ -1,5 +1,6 @@
 package com.example.weekendproject.service;
 
+import com.example.weekendproject.model.Token;
 import com.example.weekendproject.model.Post;
 import com.example.weekendproject.model.Role;
 import com.example.weekendproject.model.User;
@@ -13,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,11 +24,17 @@ public class UserService {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    TokenService tokenService;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public User addUser(User user) {
+        Token token = new Token();
         user = addUserRole(user);
+        user.setToken(token);
         String password = user.getPassword();
+        tokenService.addToken(token);
         user.setPassword(bCryptPasswordEncoder.encode(password));
         return userRepository.save(user);
     }

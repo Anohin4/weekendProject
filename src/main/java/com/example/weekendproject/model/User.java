@@ -1,6 +1,5 @@
 package com.example.weekendproject.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -37,13 +36,18 @@ public class User {
     @Column(name = "LAST_NAME")
     private String lastName;
     @Column(name="IS_ACTIVE")
-    private boolean isActive = true;
+    private boolean isActive = false;
+
     @ManyToMany
             @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
-    Set<Role> roles;
+    private Set<Role> roles;
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private Token token;
 
 }
