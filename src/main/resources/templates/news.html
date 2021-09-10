@@ -25,12 +25,34 @@
             <br>
             <span class="border border-5 rounded">
                 <span th:text="${post.news}"></span>
-                 <form th:action="@{/news/{id}(id=${post.id})}" method="get" >
-                    <button type="submit" class="btn btn-secondary">Read</button>
-                </form>
             </span>
+            <form th:action="@{/news/{id}(id=${post.id})}" method="get" >
+                <button type="submit" class="btn btn-secondary">Read</button>
+            </form>
         </div>
     </div>
+</div>
+
+<div class="container" th:if="${totalPages > 1}" class="text-center" >
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" th:if="${currentPage==totalPages}"><a class="page-link" th:href="@{/news(page=${postList.number+2})}">
+                <span th:text="${currentPage - 2}"/>
+            </a></li>
+            <li class="page-item" th:if="${currentPage>1}"><a class="page-link" th:href="@{/news(page=${postList.number})}">
+                <span th:text="${currentPage - 1}"/>
+            </a></li>
+            <li class="page-item active"><a class="page-link" href=th:href="@{/news(page=${postList.number+1})}">
+                <span th:text="${currentPage}"/>
+            </a></li>
+            <li class="page-item" th:if="${currentPage<totalPages}"><a class="page-link" th:href="@{/news(page=${postList.number+2})}">
+                <span th:text="${currentPage + 1}"/>
+            </a></li>
+            <li class="page-item" th:if="${currentPage==1}"><a class="page-link" th:href="@{/news(page=${postList.number+3})}">
+                <span th:text="${currentPage + 2}"/>
+            </a></li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

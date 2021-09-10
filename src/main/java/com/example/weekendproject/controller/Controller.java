@@ -4,13 +4,13 @@ import com.example.weekendproject.model.Post;
 import com.example.weekendproject.model.User;
 import com.example.weekendproject.service.PostService;
 import com.example.weekendproject.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -49,13 +49,6 @@ public class Controller {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/news", method = RequestMethod.GET)
-    public ModelAndView showNews(Model model) {
-        List<Post> postList = postService.findAll();
-        model.addAttribute("postList", postList);
-        modelAndView.setViewName("news");
-        return modelAndView;
-    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView signUp(@Valid  User user, BindingResult bindingResult, Model model) {
@@ -87,6 +80,19 @@ public class Controller {
             postService.addPost(post);
             modelAndView.setViewName("redirect:/news");
         }
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/news", method = RequestMethod.GET)
+    public ModelAndView showNews(Model model,
+                                 @RequestParam(defaultValue = "1") int page)
+    {
+        Page<Post> postList = postService.findAll(page - 1);
+        int totalPages = postList.getTotalPages();
+        model.addAttribute("currentPage", page);
+        model.addAttribute("postList", postList);
+        model.addAttribute("totalPages", totalPages);
+        modelAndView.setViewName("news");
         return modelAndView;
     }
 

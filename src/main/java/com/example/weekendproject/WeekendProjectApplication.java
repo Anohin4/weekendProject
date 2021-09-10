@@ -1,7 +1,9 @@
 package com.example.weekendproject;
 
+import com.example.weekendproject.model.Post;
 import com.example.weekendproject.model.Role;
 import com.example.weekendproject.model.User;
+import com.example.weekendproject.repository.PostRepository;
 import com.example.weekendproject.repository.RoleRepository;
 import com.example.weekendproject.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
@@ -20,9 +22,12 @@ public class WeekendProjectApplication {
 
     final UserRepository userRepository;
 
-    public WeekendProjectApplication(RoleRepository roleRepository, UserRepository userRepository) {
+    final PostRepository postRepository;
+
+    public WeekendProjectApplication(RoleRepository roleRepository, UserRepository userRepository, PostRepository postRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     public static void main(String[] args) {
@@ -43,5 +48,17 @@ public class WeekendProjectApplication {
         user.setUsername("admin");
         user.setEmail("admin@admin");
         userRepository.save(user);
+
+        Post post= new Post();
+        post.setUser(user);
+        String postText= "Post ";
+        int n = 1;
+        while (n != 45) {
+            post.setId(n);
+            postText = postText + n;
+            post.setNews(postText);
+            postRepository.save(post);
+            n++;
+        }
     }
 }

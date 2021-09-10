@@ -3,6 +3,9 @@ package com.example.weekendproject.service;
 import com.example.weekendproject.model.Post;
 import com.example.weekendproject.model.User;
 import com.example.weekendproject.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -30,8 +33,9 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public List<Post> findAll() {
-        return postRepository.findAll();
+    public Page<Post> findAll(int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return postRepository.findAll(pageable);
     }
 
 
