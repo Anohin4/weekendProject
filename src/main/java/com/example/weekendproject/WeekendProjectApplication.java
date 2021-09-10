@@ -51,11 +51,11 @@ public class WeekendProjectApplication {
 
         Post post= new Post();
         post.setUser(user);
-        String postText= "Post ";
+
         int n = 1;
         while (n != 45) {
+            String postText= "Post " + n;
             post.setId(n);
-            postText = postText + n;
             post.setNews(postText);
             postRepository.save(post);
             n++;
