@@ -1,5 +1,6 @@
 package com.example.weekendproject.repository;
 
+import com.example.weekendproject.model.Token;
 import com.example.weekendproject.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
@@ -11,4 +12,5 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     public Optional<User> findByEmail(String email);
     public Optional<User> findByUsername(String username);
     public Optional<User> findById(int id);
+    public Optional<User> findByToken(Token token);
 }

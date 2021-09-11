@@ -1,8 +1,10 @@
 package com.example.weekendproject.controller;
 
 import com.example.weekendproject.model.Post;
+import com.example.weekendproject.model.Token;
 import com.example.weekendproject.model.User;
 import com.example.weekendproject.service.PostService;
+import com.example.weekendproject.service.TokenService;
 import com.example.weekendproject.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
@@ -22,10 +24,12 @@ public class Controller {
 
     final
     UserService userService;
+    final TokenService tokenService;
 
-    public Controller(PostService postService, UserService userService) {
+    public Controller(PostService postService, UserService userService, TokenService tokenService) {
         this.postService = postService;
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
 
@@ -127,6 +131,29 @@ public class Controller {
             modelAndView.setViewName("redirect:/news");
         }
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/activation/{id}", method = RequestMethod.GET)
+    public  ModelAndView activateUser(@PathVariable String id, Model model) {
+        Optional<Token> token = tokenService.findTokenById(id);
+        if(!userService.isAnon()){
+            model.addAttribute("message", "Activation is not available, please log out first.");
+            modelAndView.setViewName("messagePage");
+        }else if(token.isEmpty()) {
+            model.addAttribute("message", "There is no such token.");
+            modelAndView.setViewName("messagePage");
+        } else if (tokenService.isExpired(token.get())) {
+            model.addAttribute("message", "Token is expired. We sent you email with another one.");
+            userService.reSendTokenEmail(id);
+            modelAndView.setViewName("messagePage");
+        } else {
+            User user = userService.findByToken(token.get());
+            String message = user.isActive() ? "Your account is already active" : "You have activated your account.";
+            userService.activateUser(user);
+            model.addAttribute("message", message);
+            modelAndView.setViewName("messagePage");
+        }
+    return modelAndView;
     }
 
 }

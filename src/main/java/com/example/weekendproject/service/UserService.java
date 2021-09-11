@@ -6,7 +6,6 @@ import com.example.weekendproject.model.Role;
 import com.example.weekendproject.model.User;
 import com.example.weekendproject.repository.RoleRepository;
 import com.example.weekendproject.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,28 +13,63 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UserService {
-    @Autowired
+    final
     UserRepository userRepository;
 
-    @Autowired
+    final
     RoleRepository roleRepository;
 
-    @Autowired
+    final
     TokenService tokenService;
+
+    final
+    SendMailService sendMailService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
+    public UserService(TokenService tokenService, RoleRepository roleRepository, UserRepository userRepository, SendMailService sendMailService) {
+        this.tokenService = tokenService;
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.sendMailService = sendMailService;
+    }
+
     public User addUser(User user) {
-        Token token = new Token();
+        Token token = tokenService.setExpireDate(new Token(), 1);
         user = addUserRole(user);
         user.setToken(token);
         String password = user.getPassword();
-        tokenService.addToken(token);
+//        tokenService.addToken(token);
+        sendMailService.sendMail(user.getEmail(), token.getId());
         user.setPassword(bCryptPasswordEncoder.encode(password));
+        return userRepository.save(user);
+    }
+
+    public User reSendTokenEmail(String tokenId) {
+        //finding user with that token
+        Token oldToken = tokenService.findTokenById(tokenId).get();
+        User user = findByToken(oldToken);
+        //creating new token and deleting old one
+        Token newToken = tokenService.setExpireDate(new Token(), 1);
+        user.setToken(newToken);
+        tokenService.deleteOldToken(tokenId);
+        //sending email with new token
+        sendMailService.sendMail(user.getEmail(), newToken.getId());
+        return userRepository.save(user);
+    }
+
+    public User findByToken(Token token) {
+        Optional<User> user = userRepository.findByToken(token);
+        return user.get();
+    }
+
+    public User activateUser(User user) {
+        user.setActive(true);
         return userRepository.save(user);
     }
 

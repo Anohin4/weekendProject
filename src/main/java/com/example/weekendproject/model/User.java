@@ -43,11 +43,12 @@ public class User {
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
     private Set<Role> roles;
+
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "token_id", referencedColumnName = "id")
     private Token token;
 
 }
