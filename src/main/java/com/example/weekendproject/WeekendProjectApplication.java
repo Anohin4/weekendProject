@@ -47,8 +47,9 @@ public class WeekendProjectApplication {
         user.setRoles(roles);
         user.setUsername("admin");
         user.setEmail("admin@admin");
-        userRepository.save(user);
         user.setActive(true);
+        userRepository.save(user);
+
 
         Post post= new Post();
         post.setUser(user);
