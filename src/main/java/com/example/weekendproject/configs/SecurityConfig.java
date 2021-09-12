@@ -1,6 +1,5 @@
 package com.example.weekendproject.configs;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +14,9 @@ import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
+    final MyUserDetailService myUserDetailService;
+
+    final
     DataSource dataSource;
 
     @Value("${spring.queries.users-query}")
@@ -23,12 +24,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.queries.roles-query}")
     private String roleQueries;
+
+    public SecurityConfig(MyUserDetailService myUserDetailService, DataSource dataSource) {
+        this.myUserDetailService = myUserDetailService;
+        this.dataSource = dataSource;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(userQueries)
                 .authoritiesByUsernameQuery(roleQueries);
+        auth.userDetailsService(myUserDetailService);
     }
 
     @Override

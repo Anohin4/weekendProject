@@ -39,12 +39,15 @@ public class UserService {
         this.sendMailService = sendMailService;
     }
 
+    public Optional<User> findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
     public User addUser(User user) {
         Token token = tokenService.setExpireDate(new Token(), 1);
         user = addUserRole(user);
         user.setToken(token);
         String password = user.getPassword();
-//        tokenService.addToken(token);
         sendMailService.sendMail(user.getEmail(), token.getId());
         user.setPassword(bCryptPasswordEncoder.encode(password));
         return userRepository.save(user);
@@ -94,19 +97,6 @@ public class UserService {
     public boolean isAnon() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication instanceof AnonymousAuthenticationToken;
-    }
-
-    public boolean isCurrentUserAdmin() {
-        User user = getInstanceOfCurrentUser();
-        Set<Role> roles = user.getRoles();
-        Role admin = roleRepository.findByRole("ROLE_ADMIN");
-        return roles.contains(admin);
-    }
-    public boolean isCurrentUserUser() {
-        User user = getInstanceOfCurrentUser();
-        Set<Role> roles = user.getRoles();
-        Role admin = roleRepository.findByRole("ROLE_USER");
-        return roles.contains(admin);
     }
 
     public void deletePost(User user, Post post) {

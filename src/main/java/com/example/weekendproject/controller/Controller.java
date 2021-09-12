@@ -63,7 +63,8 @@ public class Controller {
                     "There is already a user registered with the email or username provided");
         } else {
             userService.addUser(user);
-            modelAndView.setViewName("login");
+            model.addAttribute("message", "Link with activation was sent to your email.");
+            modelAndView.setViewName("messagePage");
         }
         return modelAndView;
     }
@@ -136,24 +137,22 @@ public class Controller {
     @RequestMapping(value = "/activation/{id}", method = RequestMethod.GET)
     public  ModelAndView activateUser(@PathVariable String id, Model model) {
         Optional<Token> token = tokenService.findTokenById(id);
+        String message= "";
         if(!userService.isAnon()){
-            model.addAttribute("message", "Activation is not available, please log out first.");
-            modelAndView.setViewName("messagePage");
+            message = "Activation is not available, please log out first.";
         }else if(token.isEmpty()) {
-            model.addAttribute("message", "There is no such token.");
-            modelAndView.setViewName("messagePage");
+            message = "There is no such token.";
         } else if (tokenService.isExpired(token.get())) {
-            model.addAttribute("message", "Token is expired. We sent you email with another one.");
+            message = "Token is expired. We sent you email with another one.";
             userService.reSendTokenEmail(id);
-            modelAndView.setViewName("messagePage");
         } else {
             User user = userService.findByToken(token.get());
-            String message = user.isActive() ? "Your account is already active" : "You have activated your account.";
+            message = user.isActive() ? "Your account is already active" : "You have activated your account.";
             userService.activateUser(user);
-            model.addAttribute("message", message);
-            modelAndView.setViewName("messagePage");
         }
-    return modelAndView;
+        model.addAttribute("message", message);
+        modelAndView.setViewName("messagePage");
+        return modelAndView;
     }
 
 }
