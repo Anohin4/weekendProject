@@ -15,10 +15,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
-    @Column(name = "ROLE_ID")
-    @Id
-    private int id;
-    @Column(name = "ROLE")
-    private String role;
+
+  @Column(name = "ROLE_ID")
+  @Id
+  private int id;
+  @Column(name = "ROLE")
+  private String role;
 
 }

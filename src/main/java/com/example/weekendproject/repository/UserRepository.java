@@ -9,8 +9,12 @@ import java.util.Optional;
 
 @Component
 public interface UserRepository extends CrudRepository<User, Integer> {
-    public Optional<User> findByEmail(String email);
-    public Optional<User> findByUsername(String username);
-    public Optional<User> findById(int id);
-    public Optional<User> findByToken(Token token);
+
+  Optional<User> findByEmail(String email);
+
+  Optional<User> findByUsername(String username);
+
+  Optional<User> findById(int id);
+
+  Optional<User> findByToken(Token token);
 }

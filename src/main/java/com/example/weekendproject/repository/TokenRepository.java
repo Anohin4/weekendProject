@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Component
 public interface TokenRepository extends CrudRepository<Token, String> {
-    public Optional<Token> findById(String id);
+
+  Optional<Token> findById(String id);
 }

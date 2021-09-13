@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Registration page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Registration page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+        crossorigin="anonymous">
 </head>
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
-<form th:action="@{/registration}" th:object="${user}" method="post" class="col-lg-6 offset-lg-3 pt-1 ">
-    <div class="row" style="padding-top: 20%;">
-        <div class="row justify-content-center">
+<form th:action="@{/registration}" th:object="${user}" method="post"
+      class="col-lg-6 offset-lg-3 pt-1 ">
+  <div class="row" style="padding-top: 20%;">
+    <div class="row justify-content-center">
             <span class="border border-5" style="padding:5em">
                 <div class="input-group mb-3">
-                    <label for="username">Username <input id="username" th:field="*{username}" class="form-control" type="text"/></label><br><br>
-                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message">Invalid username.</p>
+                    <label for="username">Username <input id="username" th:field="*{username}"
+                                                          class="form-control" type="text"/></label><br><br>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                       class="validation-message">Invalid username.</p>
                 </div>
                 <div class="input-group mb-3">
-                    <label for="password">Password <input class="form-control" id="password" th:field="*{password}" type="text"/></label>
-                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message">Invalid password.</p>
+                    <label for="password">Password <input class="form-control" id="password"
+                                                          th:field="*{password}"
+                                                          type="text"/></label>
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                       class="validation-message">Invalid password.</p>
                 </div>
                 <div class="input-group mb-3">
-                    <label for="email">Email <input class="form-control" id="email" th:field="*{email}" type="text"/></label>
-                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message">Invalid email.</p>
+                    <label for="email">Email <input class="form-control" id="email"
+                                                    th:field="*{email}" type="text"/></label>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                       class="validation-message">Invalid email.</p>
                 </div>
                 <input id="submit" type="submit">
             </span>
-        </div>
     </div>
+  </div>
 </form>
 
 </body>

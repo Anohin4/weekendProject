@@ -14,41 +14,42 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
-    int id;
 
-    @NotEmpty(message = "Username can't be empty")
-    @Column(name = "USER_NAME")
-    String username;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "USER_ID")
+  int id;
 
-    @Length(min=6, message = "Password must be at least 6 chars")
-    @Column(name = "PASSWORD")
-    private String password;
+  @NotEmpty(message = "Username can't be empty")
+  @Column(name = "USER_NAME")
+  String username;
 
-    @Email(message = "wrong email format")
-    @NotEmpty
-    @Column(name = "EMAIL")
-    private String email;
-    @Column(name = "FIRST_NAME")
-    private String firstName;
-    @Column(name = "LAST_NAME")
-    private String lastName;
-    @Column(name="IS_ACTIVE")
-    private boolean isActive = false;
+  @Length(min = 6, message = "Password must be at least 6 chars")
+  @Column(name = "PASSWORD")
+  private String password;
 
-    @ManyToMany
-            @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "USER_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
-    private Set<Role> roles;
+  @Email(message = "wrong email format")
+  @NotEmpty
+  @Column(name = "EMAIL")
+  private String email;
+  @Column(name = "FIRST_NAME")
+  private String firstName;
+  @Column(name = "LAST_NAME")
+  private String lastName;
+  @Column(name = "IS_ACTIVE")
+  private boolean isActive = false;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts;
+  @ManyToMany
+  @JoinTable(name = "user_role",
+      joinColumns = {@JoinColumn(name = "USER_ID")},
+      inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
+  private Set<Role> roles;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "token_id", referencedColumnName = "id")
-    private Token token;
+  @OneToMany(mappedBy = "user")
+  private List<Post> posts;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "token_id", referencedColumnName = "id")
+  private Token token;
 
 }

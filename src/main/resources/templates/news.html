@@ -2,61 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Hello</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+        crossorigin="anonymous">
 </head>
 <body>
 <nav th:insert="~{parts/navbar::copy}"></nav>
 <div class="container">
-    <div th:each="post : ${postList}" >
-        <div class="row mb-3">
-            <p>Author: <span th:text="${post.user.username}"/>Date:  <span th:text="${post.date}"/> Id: <span th:text="${post.id}"/></p>
-            <div sec:authorize="hasRole('ADMIN')" class="row">
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <form th:action="@{/edit/edit/{id}(id=${post.id})}" method="post" >
-                    <button type="submit" class="btn btn-secondary">Edit</button>
-                </form>
-                <form th:action="@{/edit/delete/{id}(id=${post.id})}" method="post" >
-                    <button type="submit" id="submitButton" class="btn btn-danger" >Delete</button>
-                </form>
-                </div>
-            </div>
-            <br>
-            <span class="border border-5 rounded">
+  <div th:each="post : ${postList}">
+    <div class="row mb-3">
+      <p>Author: <span th:text="${post.user.username}"/>Date: <span th:text="${post.date}"/> Id:
+        <span th:text="${post.id}"/></p>
+      <div sec:authorize="hasRole('ADMIN')" class="row">
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <form th:action="@{/edit/edit/{id}(id=${post.id})}" method="post">
+            <button type="submit" class="btn btn-secondary">Edit</button>
+          </form>
+          <form th:action="@{/edit/delete/{id}(id=${post.id})}" method="post">
+            <button type="submit" id="submitButton" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+      <br>
+      <span class="border border-5 rounded">
                 <span th:text="${post.news}"></span>
             </span>
-            <form th:action="@{/news/{id}(id=${post.id})}" method="get" >
-                <button type="submit" class="btn btn-secondary">Read</button>
-            </form>
-        </div>
+      <form th:action="@{/news/{id}(id=${post.id})}" method="get">
+        <button type="submit" class="btn btn-secondary">Read</button>
+      </form>
     </div>
+  </div>
 </div>
 
 <div class="container" th:if="${totalPages > 1}">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:if="${currentPage==totalPages}">
-                <a class="page-link" th:href="@{/news(page=${postList.number-1})}">
-                <span th:text="${currentPage - 2}"/>
-            </a></li>
-            <li class="page-item" th:if="${currentPage>1}">
-                <a class="page-link" th:href="@{/news(page=${postList.number})}">
-                <span th:text="${currentPage - 1}"/>
-            </a></li>
-            <li class="page-item active"><a class="page-link" href=th:href="@{/news(page=${postList.number+1})}">
-                <span th:text="${currentPage}"/>
-            </a></li>
-            <li class="page-item" th:if="${currentPage<totalPages}">
-                <a class="page-link" th:href="@{/news(page=${postList.number+2})}">
-                <span th:text="${currentPage + 1}"/>
-            </a></li>
-            <li class="page-item" th:if="${currentPage==1}">
-                <a class="page-link" th:href="@{/news(page=${postList.number+3})}">
-                <span th:text="${currentPage + 2}"/>
-            </a></li>
-        </ul>
-    </nav>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:if="${currentPage==totalPages}">
+        <a class="page-link" th:href="@{/news(page=${postList.number-1})}">
+          <span th:text="${currentPage - 2}"/>
+        </a></li>
+      <li class="page-item" th:if="${currentPage>1}">
+        <a class="page-link" th:href="@{/news(page=${postList.number})}">
+          <span th:text="${currentPage - 1}"/>
+        </a></li>
+      <li class="page-item active"><a class="page-link"
+                                      href=th:href="@{/news(page=${postList.number+1})}">
+        <span th:text="${currentPage}"/>
+      </a></li>
+      <li class="page-item" th:if="${currentPage<totalPages}">
+        <a class="page-link" th:href="@{/news(page=${postList.number+2})}">
+          <span th:text="${currentPage + 1}"/>
+        </a></li>
+      <li class="page-item" th:if="${currentPage==1}">
+        <a class="page-link" th:href="@{/news(page=${postList.number+3})}">
+          <span th:text="${currentPage + 2}"/>
+        </a></li>
+    </ul>
+  </nav>
 </div>
 </body>
 </html>
