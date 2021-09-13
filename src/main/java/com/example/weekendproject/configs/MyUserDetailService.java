@@ -1,6 +1,7 @@
 package com.example.weekendproject.configs;
 
 import com.example.weekendproject.model.User;
+import com.example.weekendproject.repository.UserRepository;
 import com.example.weekendproject.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,19 +12,19 @@ import java.util.Optional;
 
 @Component
 public class MyUserDetailService implements UserDetailsService {
-    final
-    UserService userService;
 
-    public MyUserDetailService(UserService userService) {
-        this.userService = userService;
-    }
+  final UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-       Optional<User> user = userService.findByUsername(s);
-       if(user.isEmpty()) {
-           throw  new UsernameNotFoundException(s);
-       }
-       return new UserDetailsImpl(user.get());
+  public MyUserDetailService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    Optional<User> user = userRepository.findByUsername(s);
+    if (user.isEmpty()) {
+      throw new UsernameNotFoundException(s);
     }
+    return new UserDetailsImpl(user.get());
+  }
 }

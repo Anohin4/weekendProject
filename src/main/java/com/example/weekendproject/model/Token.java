@@ -8,18 +8,18 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 public class Token {
-    @Id
-    String id;
 
-    @OneToOne(mappedBy = "token")
-    User user;
+  @Id
+  String id;
 
+  @OneToOne(mappedBy = "token")
+  User user;
 
-    LocalDateTime dateOfExpire;
+  LocalDateTime dateOfExpire;
 
-    public Token() {
-        this.id = java.util.UUID.randomUUID().toString();
-        this.dateOfExpire = LocalDateTime.now().plusDays(1);
-    }
+  public Token() {
+    this.id = java.util.UUID.randomUUID().toString();
+    this.dateOfExpire = LocalDateTime.now().plusDays(1);
+  }
 
 }

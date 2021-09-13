@@ -12,18 +12,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebApplicationConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/notFound").setViewName("redirect:/homepage");
-    }
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/notFound").setViewName("redirect:/homepage");
+  }
 
-
-    @Bean
-    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
-        return container -> {
-            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
-                    "/notFound"));
-        };
-    }
+  @Bean
+  public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
+    return container -> {
+      container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
+          "/notFound"));
+    };
+  }
 
 }

@@ -12,18 +12,19 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
-    @Column(name = "DATE")
-    private String date;
+  @ManyToOne
+  @JoinColumn(name = "USER_ID")
+  private User user;
 
-    @Column(name = "NEWS", length = 10000)
-    @NotEmpty
-    private String news;
+  @Column(name = "DATE")
+  private String date;
+
+  @Column(name = "NEWS", length = 10000)
+  @NotEmpty
+  private String news;
 }

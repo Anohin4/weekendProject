@@ -13,7 +13,9 @@ import java.util.Optional;
 
 @Component
 public interface PostRepository extends PagingAndSortingRepository<Post, Integer> {
-    @Query(value = "SELECT id, date, user_id,substring(news, 1, 100) as news FROM POST ", nativeQuery = true)
-    public Page<Post> findAll(Pageable pageable);
-    public Optional<Post> findById(int id);
+
+  @Query(value = "SELECT id, date, user_id,substring(news, 1, 100) as news FROM POST ", nativeQuery = true)
+  Page<Post> findAll(Pageable pageable);
+
+  Optional<Post> findById(int id);
 }
