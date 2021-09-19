@@ -1,11 +1,14 @@
 package com.example.weekendproject.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Data
@@ -27,4 +30,8 @@ public class Post {
   @Column(name = "NEWS", length = 10000)
   @NotEmpty
   private String news;
+
+  @OneToMany(mappedBy = "post")
+  private List<Image> image;
+
 }
