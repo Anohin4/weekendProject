@@ -6,23 +6,23 @@ import com.example.weekendproject.service.ImageService;
 import com.example.weekendproject.service.PostService;
 import com.example.weekendproject.service.TokenService;
 import com.example.weekendproject.service.UserService;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class NewsController {
@@ -54,7 +54,9 @@ public class NewsController {
   }
 
   @RequestMapping(value = "/addPost", method = RequestMethod.POST)
-  public String addPost(Model model, @Valid Post post,@RequestParam("files") MultipartFile file, BindingResult bindingResult) {
+  public String addPost(Model model, @Valid Post post,
+      @RequestParam(value = "files", required = false) MultipartFile file,
+      BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       return "addpost";
     } else {
@@ -107,14 +109,11 @@ public class NewsController {
     }
   }
 
-//  @RequestMapping(value = "/upload", method = RequestMethod.POST)
-//  public String fileUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file,
-//      RedirectAttributes redirectAttributes, Model model) {
-//    model.addAttribute("file", file);
-//    String referer = request.getHeader("Referer");
-//    redirectAttributes.addFlashAttribute("message",
-//        "You successfully uploaded " + file.getOriginalFilename() + "!");
-//    imageService.saveImage(file);
-//    return "redirect:" + referer;
+  @RequestMapping(value = "/uploads/images/{filename:.+}", method = RequestMethod.GET)
+  public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
+    Resource file = imageService.loadAsResource(filename);
+    return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+        "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+  }
 //  }
 }

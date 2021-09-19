@@ -31,7 +31,7 @@ public class Post {
   @NotEmpty
   private String news;
 
-  @OneToMany(mappedBy = "post")
+  @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
   private List<Image> image;
 
 }
