@@ -13,9 +13,12 @@
 <nav th:insert="~{parts/navbar::copy}"></nav>
 <div class="container">
   <div class="row" style="padding-top: 20%;">
-    <div class="row justify-content-center">
-                <span class="border border-5" th:object="${post}" style="padding:5em">
+    <div class="row justify-content-center" th:object="${post}">
+                <span class="border border-5" style="padding:5em">
                     <span th:text="*{news}"></span>
+                          <div th:each="oneImage : ${imageList}">
+          <img id="image" th:src="@{${oneImage.link}}">
+        </div>
                 </span>
     </div>
   </div>

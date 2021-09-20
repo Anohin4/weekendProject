@@ -1,5 +1,6 @@
 package com.example.weekendproject.service;
 
+import com.example.weekendproject.model.Image;
 import com.example.weekendproject.model.Post;
 import com.example.weekendproject.model.User;
 import com.example.weekendproject.repository.PostRepository;
@@ -12,23 +13,31 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class PostService {
 
   final PostRepository postRepository;
   final UserService userService;
+  final ImageService imageService;
 
-  public PostService(PostRepository postRepository, UserService userService) {
+  public PostService(PostRepository postRepository, UserService userService,
+      ImageService imageService) {
     this.postRepository = postRepository;
     this.userService = userService;
+    this.imageService = imageService;
   }
 
-  public Post addPost(Post post) {
+  public Post addPost(Post post, MultipartFile file) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
     post.setDate(now.format(formatter));
     post.setUser(userService.getInstanceOfCurrentUser());
+    //saving post to gain id (new post doesn't have id and id generated when you save post)
+    post = postRepository.save(post);
+    imageService.saveImage(file, post);
+    //saving post with images
     return postRepository.save(post);
   }
 
