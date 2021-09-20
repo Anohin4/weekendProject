@@ -34,16 +34,12 @@ public class PostService {
     LocalDateTime now = LocalDateTime.now();
     post.setDate(now.format(formatter));
     post.setUser(userService.getInstanceOfCurrentUser());
+    //saving post to gain id (new post doesn't have id and id generated when you save post)
+    post = postRepository.save(post);
     imageService.saveImage(file, post);
+    //saving post with images
     return postRepository.save(post);
   }
-
-//  public List<Image> addImages(Post post, MultipartFile file) {
-//    List<Image> imagesList = post.getImage();
-//    imagesList.add(imageService.saveImage(file));
-//
-//    return imagesList;
-//  }
 
   public Page<Post> findAll(int page) {
     Pageable pageable = PageRequest.of(page, 10);

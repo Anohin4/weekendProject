@@ -31,7 +31,7 @@ public class Post {
   @NotEmpty
   private String news;
 
-  @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
   private List<Image> image;
 
 }

@@ -20,7 +20,7 @@ public class Image {
 
   private String link;
 
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "POST_ID")
+  @ManyToOne(optional=false)
+  @JoinColumn(name = "POST_ID", referencedColumnName = "id")
   private Post post;
 }

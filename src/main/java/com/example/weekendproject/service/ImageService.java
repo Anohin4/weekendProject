@@ -57,14 +57,6 @@ public class ImageService {
     return imageRepository.save(image);
   }
 
-  public List<Image> findAllByPost(Post post) {
-    return imageRepository.findAllByPost(post);
-  }
-
-  public Path load(String filename) {
-    return Paths.get(source).resolve(filename);
-  }
-
   public Resource loadAsResource(String filename) throws IOException {
     try {
       Path file = load(filename);
@@ -79,5 +71,15 @@ public class ImageService {
       throw new IOException("You fucked up");
     }
   }
+
+  public List<Image> findAllByPost(Post post) {
+    return imageRepository.findAllByPost(post);
+  }
+
+  public Path load(String filename) {
+    return Paths.get(source).resolve(filename);
+  }
+
+
 }
 
